@@ -8,26 +8,21 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+
+import com.learning.config.HibernateConfig;
 import com.learning.entity.Employee;
 
 public class Main {
+	 
 	
-	static Metadata meta = null;
-	
-	public static SessionFactory getSessionFactory() {
-		return new MetadataSources(new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build())
-				.getMetadataBuilder().build().buildSessionFactory();
-	}
-	
-	
+	 
 	public static void main(String[] args) {
-		
 		Employee e = new Employee("Sonu", "male", 50000);	
 //		Configuration cfg = new Configuration().configure("hibernate.cfg.xml"); //here I made configuration.
 		
 
-		SessionFactory sessionFactory = getSessionFactory();
-		Session session = sessionFactory.openSession();
+		SessionFactory sf = HibernateConfig.getSessionFactory();
+		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
 		session.persist(e); 
 		tx.commit();
